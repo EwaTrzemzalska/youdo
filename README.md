@@ -1,34 +1,26 @@
 # youdo
 
-FIXME: description
-
-## Installation
-
-Download from http://example.com/FIXME.
-
 ## Usage
 
-...
+### Adding a new task to a file:
 
-## Options
+```
+youdo add -t "Wynieść śmieci" -p ./house.youdo
+```
 
-FIXME: listing of options this app accepts.
+### Listing tasks from a given file:
 
-## Examples
+```
+youdo list -p ./house.youdo
+```
 
-...
+### Syntax:
 
-### Bugs
-
-...
-
-### Any Other Sections
-### That You Think
-### Might be Useful
+youdo action (OPTIONAL -t task) -p path
 
 ## License
 
-Copyright © 2020 FIXME
+Copyright © 2020 EwaTrzemzalska
 
 This program and the accompanying materials are made available under the
 terms of the Eclipse Public License 2.0 which is available at
