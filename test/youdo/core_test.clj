@@ -12,20 +12,16 @@
           :path "./house.youdo"})))
 
 (deftest incorrect-arguments-cause-an-error
-  (testing "User provides incorrect action"
+  (testing "User provides an incorrect action"
     (is (thrown-with-msg? Exception #"Incorrect action"
                           (core/parse-args "print" []))))
   (testing "User doesn't provide an action"
-    (is (thrown-with-msg? Exception #"Provide an action"
+    (is (thrown-with-msg? Exception #"Action not found"
                           (core/parse-args "" []))))
-  (testing "User doesn't provide a path"
-    (is (thrown-with-msg? Exception #"Provide a path" 
-                          (core/parse-args "list" []))))
   (testing "User doesn't provide a task" 
-    (is (thrown-with-msg? Exception #"Provide a task" 
+    (is (thrown-with-msg? Exception #"Task not found" 
                           (core/parse-args 
                            "add" ["-p" "./house.youdo"]))))
-  (testing "User provides a incorrect path"
-    (is (thrown-with-msg? Exception #"Provide a correct path" 
-                          (core/parse-args "add" ["-t " "Clean" "-p" "~Documents/check-weather.clj"])))))
-
+  (testing "User provides an incorrect path"
+    (is (thrown-with-msg? Exception #"Incorrect path" 
+                          (core/parse-args "add" ["-t " "Clean" "-p" "incorrect/path"])))))
