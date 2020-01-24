@@ -4,6 +4,8 @@
             [clojure.string :as str])
   (:gen-class))
 
+(defonce supported-actions #{"add" "list"})
+
 (def cli-options
   ;; An option with a required argument
   [["-t" "--task TASK" "Task description"]
@@ -16,17 +18,9 @@
   (let [opts (cli-tools/parse-opts args cli-options)
         task (get-in opts [:options :task])]
     
-    (when (str/blank? action)
-      (throw (ex-info "Action not found"
-                      {:some "data that helps debug problem, for example arguments that were passsed to the function"})))
-    
-    (when (and (= action "add") (nil? task))
-      (throw (ex-info "Task not found"
-                      {:some "data that helps debug problem, for example arguments that were passsed to the function"})))
-    
-    (when-not (#{"add" "list"} action)
-      (throw (ex-info "Incorrect action"
-                      {:some "data that helps debug problem, for example arguments that were passsed to the function"})))
+    (assert (not (str/blank? action)) "Action not found")
+    (assert (not (and (= action "add") (nil? task))) "Task not found")
+    (assert (supported-actions action) "Incorrect action")
     
     (cond-> {:action (str/lower-case action)
              :path (get-in opts [:options :path])}
