@@ -21,7 +21,4 @@
   (testing "User doesn't provide a task" 
     (is (thrown-with-msg? Exception #"Task not found" 
                           (core/parse-args 
-                           "add" ["-p" "./house.youdo"]))))
-  (testing "User provides an incorrect path"
-    (is (thrown-with-msg? Exception #"Incorrect path" 
-                          (core/parse-args "add" ["-t " "Clean" "-p" "incorrect/path"])))))
+                           "add" ["-p" "./house.youdo"])))))
