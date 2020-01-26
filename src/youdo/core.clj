@@ -1,6 +1,7 @@
 (ns youdo.core
   (:require [clojure.tools.cli :as cli-tools]
-            [clojure.string :as str])
+            [clojure.string :as str]
+            [youdo.state :as state])
   (:gen-class))
 
 (defonce supported-actions #{"add" "list"})
@@ -23,4 +24,8 @@
       task (assoc :task task))))
 
 (defn -main [action & args]
-  (println (parse-args action args)))
+  (let [{:keys [action path task]} (parse-args action args)]
+    (if (= action "add")
+      (state/add-task path task)
+      (state/list-task path))))
+
