@@ -4,8 +4,8 @@
 
 (deftest proper-arguments-parsing
   (is (= (core/parse-args "add" ["-t" "Clean" "-p" "./house.youdo"])
-         {:action "add" 
-          :task "Clean" 
+         {:action "add"
+          :task "Clean"
           :path "./house.youdo"}))
   (is (= (core/parse-args "list" ["-p" "./house.youdo"])
          {:action "list"
@@ -18,7 +18,7 @@
   (testing "User doesn't provide an action"
     (is (thrown-with-msg? AssertionError #"Action not found"
                           (core/parse-args "" []))))
-  (testing "User doesn't provide a task" 
-    (is (thrown-with-msg? AssertionError #"Task not found" 
-                          (core/parse-args 
+  (testing "User doesn't provide a task"
+    (is (thrown-with-msg? AssertionError #"Task not found"
+                          (core/parse-args
                            "add" ["-p" "./house.youdo"])))))
