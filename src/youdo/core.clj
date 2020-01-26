@@ -27,5 +27,5 @@
   (let [{:keys [action path task]} (parse-args action args)]
     (if (= action "add")
       (state/add-task path task)
-      (state/list-task path))))
+      (state/list-tasks path))))
 
