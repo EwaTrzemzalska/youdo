@@ -1,6 +1,5 @@
 (ns youdo.core
-  (:require [youdo.state :as state]
-            [clojure.tools.cli :as cli-tools]
+  (:require [clojure.tools.cli :as cli-tools]
             [clojure.string :as str])
   (:gen-class))
 
