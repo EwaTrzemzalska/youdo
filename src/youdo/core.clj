@@ -7,12 +7,9 @@
 (defonce supported-actions #{"add" "list"})
 
 (def cli-options
-  ;; An option with a required argument
   [["-t" "--task TASK" "Task description"]
    ["-p" "--path PATH" "Add path"
-    :default "default-path"]
-   ;; A boolean option defaulting to nil
-   ["-h" "--help"]])
+    :default "default-path"]])
 
 (defn parse-args [action args]
   (let [opts (cli-tools/parse-opts args cli-options)
