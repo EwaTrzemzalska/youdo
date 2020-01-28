@@ -8,4 +8,5 @@
 
 (defn add-task
   "Given a file path, adds task to the end of the tasks list."
-  [path task])
+  [path task]
+  (db/save! path task))
