@@ -2,11 +2,12 @@
   (:require [clojure.java.io :as io]))
 
 (defn save!
-  "Given a path, saves data"
-  [path data])
+  "Given a path, replaces contents of the file with the given data. 
+   If the file doesn't exist it will be created under given path."
+  [path data]
+  (spit path data))
 
 (defn read!
-  ""
+  "Given a path returns a content of the file."
   [path]
-  (with-open [rdr (io/reader path)]
-    (doall (line-seq rdr))))
+  (slurp path))
