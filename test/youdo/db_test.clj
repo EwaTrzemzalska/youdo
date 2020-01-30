@@ -3,21 +3,20 @@
             [clojure.test :refer [is deftest]]
             [clojure.java.io :as io]))
 
-(def test-file-1 (io/resource "test/tasks-list.youdo"))
+(def test-file (io/resource "test/tasks-list.youdo"))
 (def test-action "Laundry")
 
-(def random-file-path (str "test/" (.toString (java.util.UUID/randomUUID)) ".youdo"))
 
 
 (deftest reading-file-content
-  (is (= (db/read! test-file-1) 
+  (is (= (db/read! test-file) 
          "Clean the kitchen\nWash dishes\nDo groceries")))
 
 (deftest saving-file-with-data
-  (let [test-file-2 random-file-path]
-    (db/save! test-file-2 test-action)
-    (is (= (slurp test-file-2) test-action))
-    (io/delete-file test-file-2)))
+  (let [random-file-path (str "test/" (.toString (java.util.UUID/randomUUID)) ".youdo")]
+    (db/save! random-file-path test-action)
+    (is (= (slurp random-file-path) test-action))
+    (io/delete-file random-file-path)))
 
 
 ; (deftest face-with-exeptions-when-folder-doesnt-exist)
