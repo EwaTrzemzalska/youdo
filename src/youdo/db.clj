@@ -7,7 +7,7 @@
   [path data]
   (spit path data))
 
-(defn read!
+(defn read-content
   "Given a path returns a content of the file."
   [path]
   (slurp path))

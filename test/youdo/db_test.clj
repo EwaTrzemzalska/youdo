@@ -6,10 +6,8 @@
 (def test-file (io/resource "test/tasks-list.youdo"))
 (def test-action "Laundry")
 
-
-
 (deftest reading-file-content
-  (is (= (db/read! test-file) 
+  (is (= (db/read-content test-file) 
          "Clean the kitchen\nWash dishes\nDo groceries")))
 
 (deftest saving-file-with-data
