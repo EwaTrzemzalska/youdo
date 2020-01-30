@@ -6,7 +6,7 @@
 (def test-file-1 (io/resource "test/tasks-list.youdo"))
 (def test-action "Laundry")
 
-(def random-file-name (str "test/" (.toString (java.util.UUID/randomUUID)) ".youdo"))
+(def random-file-path (str "test/" (.toString (java.util.UUID/randomUUID)) ".youdo"))
 
 
 (deftest reading-file-content
@@ -14,7 +14,7 @@
          "Clean the kitchen\nWash dishes\nDo groceries")))
 
 (deftest saving-file-with-data
-  (let [test-file-2 random-file-name]
+  (let [test-file-2 random-file-path]
     (db/save! test-file-2 test-action)
     (is (= (slurp test-file-2) test-action))
     (io/delete-file test-file-2)))
