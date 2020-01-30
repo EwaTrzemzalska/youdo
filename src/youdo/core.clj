@@ -13,13 +13,14 @@
 
 (defn parse-args [action args]
   (let [opts (cli-tools/parse-opts args cli-options)
-        task (get-in opts [:options :task])]
+        task (get-in opts [:options :task])
+        action (str/lower-case action)]
 
     (assert (not (str/blank? action)) "Action not found")
     (assert (not (and (= action "add") (nil? task))) "Task not found")
     (assert (supported-actions action) "Incorrect action")
 
-    (cond-> {:action (str/lower-case action)
+    (cond-> {:action action
              :path (get-in opts [:options :path])}
       task (assoc :task task))))
 
