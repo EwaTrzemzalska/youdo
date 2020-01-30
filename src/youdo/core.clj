@@ -9,7 +9,7 @@
 (def cli-options
   [["-t" "--task TASK" "Task description"]
    ["-p" "--path PATH" "Add path"
-    :default "default-path"]])
+    :default "default.youdo"]])
 
 (defn parse-args [action args]
   (let [opts (cli-tools/parse-opts args cli-options)
