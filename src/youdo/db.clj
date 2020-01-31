@@ -1,5 +1,4 @@
-(ns youdo.db
-  (:require [clojure.java.io :as io]))
+(ns youdo.db)
 
 (defn save!
   "Given a path, replaces contents of the file with the given data. 
@@ -7,7 +6,7 @@
   [path data]
   (spit path data))
 
-(defn read!
+(defn read-content
   "Given a path returns the content of the file."
   [path]
   (slurp path))
