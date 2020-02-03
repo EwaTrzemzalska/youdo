@@ -7,9 +7,16 @@
          {:action "add"
           :task "Clean"
           :path "./house.youdo"}))
+  (is (= (core/parse-args "add" ["-t" "Clean"])
+         {:action "add"
+          :task "Clean"
+          :path "default.youdo"}))
   (is (= (core/parse-args "list" ["-p" "./house.youdo"])
          {:action "list"
-          :path "./house.youdo"})))
+          :path "./house.youdo"}))
+  (is (= (core/parse-args "list")
+         {:action "list"
+          :path "default.youdo"})))
 
 (deftest incorrect-arguments-cause-an-error
   (testing "User provides an incorrect action"

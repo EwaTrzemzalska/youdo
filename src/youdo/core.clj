@@ -11,8 +11,11 @@
    ["-p" "--path PATH" "Add path"
     :default "default.youdo"]])
 
-(defn parse-args [action args]
-  (let [opts (cli-tools/parse-opts args cli-options)
+(defn parse-args 
+  ([action]
+   (parse-args action [])) 
+  ([action args]
+   (let [opts (cli-tools/parse-opts args cli-options)
         task (get-in opts [:options :task])
         action (str/lower-case action)]
 
@@ -22,7 +25,7 @@
 
     (cond-> {:action action
              :path (get-in opts [:options :path])}
-      task (assoc :task task))))
+      task (assoc :task task)))))
 
 (defn -main [action & args]
   (let [{:keys [action path task]} (parse-args action args)]
