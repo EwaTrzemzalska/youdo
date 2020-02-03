@@ -4,24 +4,25 @@
 
 (deftest proper-arguments-parsing
   (is (= (core/parse-args "add" ["-t" "Clean" "-p" "./house.youdo"])
-         {:action "add" 
-          :task "Clean" 
+         {:action "add"
+          :task "Clean"
           :path "./house.youdo"}))
+  (is (= (core/parse-args "add" ["-t" "Clean"])
+         {:action "add"
+          :task "Clean"
+          :path "default.youdo"}))
   (is (= (core/parse-args "list" ["-p" "./house.youdo"])
          {:action "list"
-          :path "./house.youdo"})))
+          :path "./house.youdo"}))
+  (is (= (core/parse-args "list")
+         {:action "list"
+          :path "default.youdo"})))
 
 (deftest incorrect-arguments-cause-an-error
   (testing "User provides an incorrect action"
-    (is (thrown-with-msg? Exception #"Incorrect action"
+    (is (thrown-with-msg? AssertionError #"Invalid or empty action"
                           (core/parse-args "print" []))))
-  (testing "User doesn't provide an action"
-    (is (thrown-with-msg? Exception #"Action not found"
-                          (core/parse-args "" []))))
-  (testing "User doesn't provide a task" 
-    (is (thrown-with-msg? Exception #"Task not found" 
-                          (core/parse-args 
-                           "add" ["-p" "./house.youdo"]))))
-  (testing "User provides an incorrect path"
-    (is (thrown-with-msg? Exception #"Incorrect path" 
-                          (core/parse-args "add" ["-t " "Clean" "-p" "incorrect/path"])))))
+  (testing "User doesn't provide a task"
+    (is (thrown-with-msg? AssertionError #"Task not found"
+                          (core/parse-args
+                           "add" ["-p" "./house.youdo"])))))

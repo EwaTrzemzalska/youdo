@@ -1,24 +1,35 @@
 (ns youdo.core
-  (:require [youdo.state :as state]
-            [clojure.tools.cli :as cli-tools])
+  (:require [clojure.tools.cli :as cli-tools]
+            [clojure.string :as str]
+            [youdo.state :as state])
   (:gen-class))
 
+(defonce supported-actions #{"add" "list"})
+
 (def cli-options
-  ;; An option with a required argument
   [["-t" "--task TASK" "Task description"]
    ["-p" "--path PATH" "Add path"
-    :default "default-path"]
-   ;; A boolean option defaulting to nil
-   ["-h" "--help"]])
+    :default "default.youdo"]])
 
-(defn parse-args [action args]
-  (let [opts (cli-tools/parse-opts args cli-options)
+(defn parse-args 
+  ([action]
+   (parse-args action [])) 
+  ([action args]
+   (let [opts (cli-tools/parse-opts args cli-options)
         task (get-in opts [:options :task])
-        path (get-in opts [:options :path])]
+        action (str/lower-case action)]
+
+    (assert (supported-actions action) "Invalid or empty action")
+    (assert (not (and (= action "add") (nil? task))) "Task not found")
+    
+
     (cond-> {:action action
-             :path path}
-      task (assoc :task task))))
+             :path (get-in opts [:options :path])}
+      task (assoc :task task)))))
 
 (defn -main [action & args]
-  (println (parse-args action args)))
+  (let [{:keys [action path task]} (parse-args action args)]
+    (if (= action "add")
+      (state/add-task path task)
+      (state/list-tasks path))))
 
