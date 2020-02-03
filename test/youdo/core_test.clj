@@ -13,11 +13,8 @@
 
 (deftest incorrect-arguments-cause-an-error
   (testing "User provides an incorrect action"
-    (is (thrown-with-msg? AssertionError #"Incorrect action"
+    (is (thrown-with-msg? AssertionError #"Invalid or empty action"
                           (core/parse-args "print" []))))
-  (testing "User doesn't provide an action"
-    (is (thrown-with-msg? AssertionError #"Action not found"
-                          (core/parse-args "" []))))
   (testing "User doesn't provide a task"
     (is (thrown-with-msg? AssertionError #"Task not found"
                           (core/parse-args

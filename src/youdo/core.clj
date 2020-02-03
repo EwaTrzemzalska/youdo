@@ -16,9 +16,9 @@
         task (get-in opts [:options :task])
         action (str/lower-case action)]
 
-    (assert (not (str/blank? action)) "Action not found")
+    (assert (supported-actions action) "Invalid or empty action")
     (assert (not (and (= action "add") (nil? task))) "Task not found")
-    (assert (supported-actions action) "Incorrect action")
+    
 
     (cond-> {:action action
              :path (get-in opts [:options :path])}
