@@ -1,4 +1,5 @@
-(ns youdo.db)
+(ns youdo.db
+  (:require [clojure.edn :as edn]))
 
 (defn save!
   "Given a path, replaces contents of the file with the given data. 
@@ -9,4 +10,4 @@
 (defn read-content
   "Given a path returns the content of the file."
   [path]
-  (slurp path))
+  (edn/read-string (slurp path)))
