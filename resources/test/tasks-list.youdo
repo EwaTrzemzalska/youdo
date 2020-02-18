@@ -1,1 +1,1 @@
-{:first-task "Clean dishes"}
+[{:done false, :task-name "Clean things"} {:done false, :task-name "Clean everything"}]

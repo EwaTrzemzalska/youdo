@@ -8,7 +8,7 @@
 
 (deftest reading-file-content
   (is (= (db/read-content test-file) 
-         {:first-task "Clean dishes"})))
+         [{:done false :task-name "Clean things"} {:done false, :task-name "Clean everything"}])))
 
 (deftest saving-file-with-data
   (let [random-file-path (str "test/" (.toString (java.util.UUID/randomUUID)) ".youdo")]
