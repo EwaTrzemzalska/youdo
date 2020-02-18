@@ -8,5 +8,6 @@
 
 (defn add-task
   "Given a file path, adds task to the end of the tasks list."
-  [path task]
-  (db/save! path task))
+  [path task-name]
+  (let [task {:done false :task-name task-name}]
+    (db/save! path (conj (db/read-content path) task))))
