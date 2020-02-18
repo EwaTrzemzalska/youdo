@@ -14,4 +14,7 @@
   "Given a file path, adds task to the end of the tasks list."
   [path task-name]
   (let [task (create-task task-name)]
-    (db/save! path (conj (db/read-content path) task))))
+    (->> path
+         (db/read-content)
+         (-> (conj task))
+         (db/save! path))))
