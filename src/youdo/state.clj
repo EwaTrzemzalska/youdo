@@ -4,9 +4,9 @@
 (defn list-tasks
   "Given a file path, returns list of tasks."
   [path]
-  (db/read-content path))
+  (map :task-name (db/read-content path)))
 
-(defn create-task 
+(defn create-task
   [task-name]
   {:done false :task-name task-name})
 
