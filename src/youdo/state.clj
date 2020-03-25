@@ -2,9 +2,10 @@
   (:require [youdo.db :as db]))
 
 (defn list-tasks
-  "Given a file path, returns list of tasks."
   [path]
-  (map :task-name (db/read-content path)))
+  (let [content (db/read-content path)
+        tasks-by-order (:tasks-by-order content)]
+    (println (map #(get-in content [:tasks-by-id % :task-name]) tasks-by-order))))
 
 (defn create-task
   [task-name]
@@ -20,5 +21,5 @@
         state (db/read-content path)]
 
     (db/save! path (-> state
-                       (update-in [:tasks-by-order] conj task-id)
+                       (update :tasks-by-order conj task-id)
                        (assoc-in [:tasks-by-id task-id] task)))))
