@@ -32,4 +32,3 @@
     (if (= action "add")
       (state/add-task path task)
       (state/list-tasks path))))
-
