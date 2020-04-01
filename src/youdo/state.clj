@@ -6,7 +6,7 @@
   [path]
   (let [content (db/read-content path)
         tasks-by-order (:tasks-by-order content)]
-    (println (map #(get-in content [:tasks-by-id % :task-name]) tasks-by-order))))
+    (map #(get-in content [:tasks-by-id % :task-name]) tasks-by-order)))
 
 (defn create-task
   [task-name]
