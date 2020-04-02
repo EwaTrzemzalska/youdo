@@ -11,7 +11,7 @@
 (defn create-task
   [task-name]
   {:task-id (java.util.UUID/randomUUID)
-   :done false
+   :done? false
    :task-name task-name})
 
 (defn add-task
@@ -20,8 +20,13 @@
   (let [task (create-task task-name)
         task-id (:task-id task)
         state (db/read-content path)]
-    
     (db/save! path (-> state
                        (update :tasks-by-order (fn [tasks-by-order] 
                                                  (vec (conj tasks-by-order task-id))))
                        (assoc-in [:tasks-by-id task-id] task)))))
+
+(defn set-done?
+  [path task-id done?]
+  (let [state (db/read-content path)]
+    (db/save! path (-> state
+                       (assoc-in [:tasks-by-id task-id :done?] done?)))))
