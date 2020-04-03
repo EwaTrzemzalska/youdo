@@ -4,9 +4,11 @@
 (defn list-tasks
   "Given a file path, returns list of tasks"
   [path]
-  (let [content (db/read-content path)
-        tasks-by-order (:tasks-by-order content)]
-    (map #(get-in content [:tasks-by-id % :task-name]) tasks-by-order)))
+  (let [state (db/read-content path)
+        tasks-by-order (:tasks-by-order state)
+        tasks-to-filter (map #(get-in state [:tasks-by-id %]) tasks-by-order)
+        tasks-to-display (filter #(not (:done? %)) tasks-to-filter)]
+    (map :task-name tasks-to-display)))
 
 (defn create-task
   [task-name]
@@ -35,5 +37,5 @@
 (defn set-done?
   [path task-id done?]
   (update-state-at-path path
-                        (fn [state] 
+                        (fn [state]
                           (assoc-in state [:tasks-by-id task-id :done?] done?))))
